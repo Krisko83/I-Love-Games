@@ -1,4 +1,33 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router";
+import request from "../../utils/request.js";
+
 export default function Details() {
+    const { gameId } = useParams()
+    const navigate = useNavigate();
+
+    const [game, setGame] = useState([])
+
+
+    useEffect(() => {
+        request(`/games?id=eq.${gameId}`)
+            .then(result => setGame(result[0]))
+            .catch(err => alert(err))
+    }, [gameId])
+
+
+    const clickDeleteHandler = async () => {
+        const confirmed = confirm('Are you sure you want to delete this game?');
+
+        if (!confirmed) {
+            return navigate(`/games/${gameId}/details`)
+        }
+
+        await request(`/games?id=eq.${gameId}`, 'DELETE')
+
+        navigate('/')
+    }
+        ;
 
     return (
         <section id="game-details">
@@ -7,44 +36,39 @@ export default function Details() {
                 <div className="header-and-image">
                     <img
                         className="game-img"
-                        src="images/elden ring.png"
+                        src={game.imageUrl}
                         alt="Elden Ring Cover Art"
                     />
                     <div className="meta-info">
-                        <h1 className="game-name">Elden Ring</h1>
+                        <h1 className="game-name">{game.title}</h1>
                         <p className="data-row">
                             <span className="label">Genre:</span>
-                            <span className="value">Action RPG</span>
+                            <span className="value">{game.genre}</span>
                         </p>
                         <p className="data-row">
                             <span className="label">Active Players:</span>
-                            <span className="value">100000</span>
+                            <span className="value">{game.activePlayers}</span>
                         </p>
                         <p className="data-row">
                             <span className="label">Release Date:</span>
-                            <span className="value">2022-02-25</span>
+                            <span className="value">{game.releaseDate}</span>
                         </p>
                     </div>
                     <div className="summary-section">
                         <h2>Summary:</h2>
                         <p className="text-summary">
-                            Elden Ring is a fantasy action RPG developed by FromSoftware and
-                            Bandai Namco. Set in the Lands Between, players embark on an epic
-                            quest to become the Elden Lord, exploring a vast open world designed
-                            by Hidetaka Miyazaki, with worldbuilding contributed by fantasy author
-                            George R. R. Martin. The game features challenging combat, deep lore,
-                            and extensive character customization.
+                            {game.summary}
                         </p>
                     </div>
                 </div>
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
                 <div className="buttons">
-                    <a href="#" className="button">
+                    <Link to="#" className="button">
                         Edit
-                    </a>
-                    <a href="#" className="button">
+                    </Link>
+                    <Link to="#" className="button" onClick={clickDeleteHandler}>
                         Delete
-                    </a>
+                    </Link>
                 </div>
                 <div className="details-comments">
                     <h2>Comments:</h2>

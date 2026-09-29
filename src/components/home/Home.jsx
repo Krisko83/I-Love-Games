@@ -1,4 +1,23 @@
+import { useEffect, useState } from "react";
+import request from "../../utils/request.js";
+import GameCard from "../game-card/GameCard.jsx";
+
 export default function Home() {
+    
+    const [games, setGames] = useState([]);
+    
+    useEffect(() => {
+        const abortController = new AbortController();
+
+        request('/games?order=created_at.desc&limit=3', 'GET', null , {signal: abortController.signal})
+            .then(setGames)
+            .catch(err => console.log(err));
+
+            return () => {
+                abortController.abort('Unmounted element');
+            }
+    }, []);
+
 
     return (
         <section id="welcome-world">
@@ -10,35 +29,15 @@ export default function Home() {
             <div id="home-page">
                 <h1>Latest Games</h1>
                 <div id="latest-wrap">
-                    {/* Display div: with information about every game (if any) */}
-                    <div className="home-container">
-                        <div className="game">
-                            <img src="./images/witcher.png" alt="Elden Ring" />
-                            <div className="details-overlay">
-                                <p className="name">The Witcher 3</p>
-                                <p className="genre">Open World</p>
-                                <button className="details-button">Details</button>
-                            </div>
-                        </div>
-                        <div className="game">
-                            <img src="./images/elden ring.png" alt="Elden Ring" />
-                            <div className="details-overlay">
-                                <p className="name">Elden Ring</p>
-                                <p className="genre">Action RPG</p>
-                                <button className="details-button">Details</button>
-                            </div>
-                        </div>
-                        <div className="game">
-                            <img src="./images/minecraft.png" alt="Minecraft" />
-                            <div className="details-overlay">
-                                <p className="name">Minecraft</p>
-                                <p className="genre">Sandbox</p>
-                                <button className="details-button">Details</button>
-                            </div>
-                            {/* Display paragraph: If there is no games  */}
-                            {/* <p class="no-articles">No games yet</p> */}
-                        </div>
+
+                     <div className="home-container">
+
+                        {games.length > 0
+                            ? games.map(game => <GameCard key={game.id} {...game} />)
+                            : <p className="no-articles">No games yet</p>
+                        }
                     </div>
+
                 </div>
             </div>
         </section>

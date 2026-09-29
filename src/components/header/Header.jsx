@@ -6,11 +6,11 @@ export default function Header() {
         <header>
             
             <nav>
-                <Link className="home" to="/"> <img src="./images/logo.png" alt="logo" /> </Link>
-                <Link to="/catalog">Catalog</Link>
+                <Link className="home" to="/"> <img src="/images/logo.png" alt="logo" /> </Link>
+                <Link to="/games/catalog">Catalog</Link>
             
                 <div id="user">
-                    <Link to="/create-game">Add Game</Link>
+                    <Link to="/games/create-game">Add Game</Link>
                     <Link to="#">Logout</Link>
                 </div>
             

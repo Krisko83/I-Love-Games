@@ -1,16 +1,44 @@
+import { useNavigate } from "react-router";
+import request from "../../utils/request.js";
+
 export default function CreateGame() {
+  const navigate = useNavigate();
+
+    const clickCreateSubmitHandler = async (event) => {
+        event.preventDefault();
+
+       
+
+        const formData = new FormData(event.target)
+        const { title, genre, activePlayers, releaseDate, imageUrl, summary } = Object.fromEntries(formData);
+
+        const game = {
+            title,
+            genre,
+            activePlayers,
+            releaseDate,
+            imageUrl,
+            summary
+        }
+        
+       await request('games', 'POST', game);
+
+       navigate('/');
+    };
+
+
 
     return (
         <section id="add-page">
-            <form id="add-new-game">
+            <form id="add-new-game" onSubmit={clickCreateSubmitHandler}>
                 <div className="container">
                     <h1>Add New Game</h1>
                     <div className="form-group-half">
-                        <label htmlFor="gameName">Game Name:</label>
+                        <label htmlFor="title">Game Name:</label>
                         <input
                             type="text"
-                            id="gameName"
-                            name="gameName"
+                            id="title"
+                            name="title"
                             placeholder="Enter game title..."
                         />
                     </div>

@@ -7,6 +7,7 @@ import Header from "./components/header/Header.jsx";
 import Home from "./components/home/Home.jsx";
 import Login from "./components/login/Login.jsx";
 import Register from "./components/register/Register.jsx";
+import Details from "./components/details/Details.jsx";
 
 function App() {
 
@@ -15,16 +16,23 @@ function App() {
       <Header />
 
       <Routes>
+        
         <Route index element={<Home />} />
-        <Route path="/catalog" element={<Catalog />} />
-        <Route path="/create-game" element={<CreateGame />} />
-        <Route path="/edit-game" element={<EditGame />} />
+
+        <Route path="/games">
+          <Route path="catalog" element={<Catalog />} />
+          <Route path="create-game" element={<CreateGame />} />
+          <Route path="edit-game" element={<EditGame />} />
+          <Route path=":gameId/details" element={<Details />} />
+        </Route>
+
         <Route path="/auth">
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
         </Route>
+
       </Routes>
-      
+
       <Footer />
     </>
   )

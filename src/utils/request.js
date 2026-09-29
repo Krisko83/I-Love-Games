@@ -1,7 +1,5 @@
+export default async function request(path = '/', method = 'GET', data = null, opts = {}) {
 
-const url = 'https://jekwxfohagnknpkqdgdo.supabase.co/rest/v1/'
-
-export async function request(path, method = 'GET', data = null, opts = {}) {
     const options = {
         headers: {
             apikey: import.meta.env.VITE_API_KEY
@@ -17,14 +15,18 @@ export async function request(path, method = 'GET', data = null, opts = {}) {
     if (method !== 'GET') {
         options.method = method;
     }
+ 
 
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}${path}`, options);
 
-    const response = await fetch(`${url}${path}`, options);
-
-    if(!response.ok) {
+    if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
     if (response.status === 204) {
+        return null
+    }
+
+    if(response.status === 201) {
         return null
     }
 
