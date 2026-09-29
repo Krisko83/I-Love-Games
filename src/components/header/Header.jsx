@@ -6,17 +6,17 @@ export default function Header() {
         <header>
             
             <nav>
-                <Link className="home" to="#"> <img src="./images/logo.png" alt="logo" /> </Link>
-                <Link to="#">Catalog</Link>
+                <Link className="home" to="/"> <img src="./images/logo.png" alt="logo" /> </Link>
+                <Link to="/catalog">Catalog</Link>
             
                 <div id="user">
-                    <Link to="#">Add Game</Link>
+                    <Link to="/create-game">Add Game</Link>
                     <Link to="#">Logout</Link>
                 </div>
             
                 <div id="guest">
-                    <Link to="#">Login</Link>
-                    <Link to="#">Register</Link>
+                    <Link to="/auth/login">Login</Link>
+                    <Link to="/auth/register">Register</Link>
                 </div>
             </nav>
         </header>

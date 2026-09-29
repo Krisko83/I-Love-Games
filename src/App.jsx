@@ -1,4 +1,4 @@
-import { Route } from "react-router";
+import { Route, Routes } from "react-router";
 import Catalog from "./components/catalog/Catalog.jsx";
 import CreateGame from "./components/create-game/CreateGame.jsx";
 import EditGame from "./components/edit-game/EditGame.jsx";
@@ -14,7 +14,7 @@ function App() {
     <>
       <Header />
 
-      <Route>
+      <Routes>
         <Route index element={<Home />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/create-game" element={<CreateGame />} />
@@ -23,7 +23,8 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
         </Route>
-      </Route>
+      </Routes>
+      
       <Footer />
     </>
   )
